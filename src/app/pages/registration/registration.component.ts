@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { RegistrationService } from './services/registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
+  mode! : string;
 
+  constructor(private SrvRegistration :RegistrationService,
+    private cd: ChangeDetectorRef
+    ) {     
+  }
   ngOnInit(): void {
+    this.SrvRegistration.Mode$.pipe().subscribe(s=>{
+      this.mode = s.mode;
+      console.log(this.mode);
+      this.cd.markForCheck();
+    });
   }
 
 }

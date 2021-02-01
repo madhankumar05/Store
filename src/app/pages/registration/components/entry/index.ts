@@ -1,1 +1,1 @@
-export { EntryComponent } from  './entry/entry.component';
+export { EntryComponent } from  './entry.component';
