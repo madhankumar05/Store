@@ -8,6 +8,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CommunicationModule } from '../#shared/communication/communication.module';
 import { PersonalModule } from '../#shared/personal/personal.module';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 const routes: Routes = [
   { path: '', component: RegistrationComponent }
@@ -20,6 +23,9 @@ const routes: Routes = [
     CommonModule,
     CommunicationModule,
     PersonalModule,
+    NzButtonModule,
+    NzPopconfirmModule,
+    NzMessageModule,
     RouterModule.forChild(routes)
   ]
 })

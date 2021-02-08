@@ -1,2 +1,17 @@
 <app-entry *ngIf="mode === 'ENTRY'"></app-entry>
 <app-list *ngIf="mode === 'LIST'"></app-list>
+<div style="text-align: right">
+  <button
+    nz-button
+    nzType="primary"
+    style="margin-right: 9px"
+    nz-popconfirm
+    nzPopconfirmTitle="Are you sure cancel this task?"
+    (nzOnConfirm)="confirm()"
+    (nzOnCancel)="cancel()"
+    nzPopconfirmPlacement="top"
+  >
+    Save
+  </button>
+  <button nz-button nzType="primary" nzDanger>Cancel</button>
+</div>

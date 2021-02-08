@@ -1,1 +1,110 @@
-<p>communication works!</p>
+<form nz-form #frmCommunication="ngForm">
+  <nz-divider nzText="Communication Details" nzOrientation="left"></nz-divider>
+  <div nz-row [nzGutter]="20">
+    <div nz-col nzMd="8" nzXs="24">
+      <nz-form-item>
+        <label>Street</label>
+        <div nz-col nzMd="24" nzXs="24">
+          <input
+            nz-input
+            name="street"
+            type="text"
+            ngModel
+            #street="ngModel"
+            Placeholder="Enter a Street"
+          />
+        </div>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzMd="8" nzXs="24">
+      <nz-form-item>
+        <label>City</label>
+        <div nz-col nzMd="24" nzXs="24">
+          <input
+            nz-input
+            name="city"
+            type="text"
+            ngModel
+            #city="ngModel"
+            Placeholder="Enter a City"
+          />
+        </div>
+      </nz-form-item>
+    </div>
+    <!-- </div>
+  <div nz-row [nzGutter]="20"> -->
+    <div nz-col nzMd="8" nzXs="24">
+      <nz-form-item>
+        <label nzMd="24" nzXs="24" nzFor="Country">Country</label>
+        <div nz-col nzMd="24" nzXs="24">
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Select a Country"
+            name="country"
+            #country="ngModel"
+            ngModel
+          >
+            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+          </nz-select>
+        </div>
+      </nz-form-item>
+    </div>
+    <div nz-col nzMd="8" nzXs="24">
+      <nz-form-item>
+        <label nzMd="24" nzXs="24" nzFor="State">State</label>
+        <div nz-col nzMd="24" nzXs="24">
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Select a State"
+            name="state"
+            #state="ngModel"
+            ngModel
+          >
+            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+          </nz-select>
+        </div>
+      </nz-form-item>
+    </div>
+    <div nz-col nzMd="8" nzXs="24">
+      <nz-form-item>
+        <label nzMd="24" nzXs="24" nzFor="District">District</label>
+        <div nz-col nzMd="24" nzXs="24">
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Select a District"
+            name="district"
+            #district="ngModel"
+            ngModel
+          >
+            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+          </nz-select>
+        </div>
+      </nz-form-item>
+    </div>
+    <div nz-col nzMd="8" nzXs="24">
+      <nz-form-item>
+        <label>Pincode</label>
+        <div nz-col nzMd="24" nzXs="24">
+          <input
+            nz-input
+            name="pincode"
+            type="text"
+            Placeholder="Enter a Pincode"
+            ngModel
+            #pincode="ngModel"
+          />
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

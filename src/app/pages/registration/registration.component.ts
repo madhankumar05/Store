@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RegistrationService } from './services/registration.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-registration',
@@ -8,18 +9,24 @@ import { RegistrationService } from './services/registration.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  mode! : string;
+  mode!: string;
 
-  constructor(private SrvRegistration :RegistrationService,
-    private cd: ChangeDetectorRef
-    ) {     
+  constructor(private SrvRegistration: RegistrationService,
+    private cd: ChangeDetectorRef, private nzMessageService: NzMessageService
+  ) {
   }
   ngOnInit(): void {
-    this.SrvRegistration.Mode$.pipe().subscribe(s=>{
+    this.SrvRegistration.Mode$.pipe().subscribe(s => {
       this.mode = s.mode;
       console.log(this.mode);
       this.cd.markForCheck();
     });
   }
+  cancel(): void {
+    this.nzMessageService.info('click cancel');
+  }
 
+  confirm(): void {
+    this.nzMessageService.info('click confirm');
+  }
 }
