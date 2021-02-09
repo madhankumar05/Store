@@ -1,4 +1,4 @@
-<form nz-form #frmCommunication="ngForm">
+<form nz-form #frmCommunication="ngForm" autocomplete="off">
   <nz-divider nzText="Communication Details" nzOrientation="left"></nz-divider>
   <div nz-row [nzGutter]="20">
     <div nz-col nzMd="8" nzXs="24">
@@ -12,7 +12,13 @@
             ngModel
             #street="ngModel"
             Placeholder="Enter a Street"
+            required
           />
+          <div *ngIf="street.errors && frmCommunication.submitted">
+            <small style="color: red" *ngIf="street.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>
@@ -28,7 +34,13 @@
             ngModel
             #city="ngModel"
             Placeholder="Enter a City"
+            required
           />
+          <div *ngIf="city.errors && frmCommunication.submitted">
+            <small style="color: red" *ngIf="city.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>
@@ -45,11 +57,17 @@
             name="country"
             #country="ngModel"
             ngModel
+            required
           >
             <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
             <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
             <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
           </nz-select>
+          <div *ngIf="country.errors && frmCommunication.submitted">
+            <small style="color: red" *ngIf="country.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>
@@ -64,11 +82,17 @@
             name="state"
             #state="ngModel"
             ngModel
+            required
           >
             <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
             <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
             <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
           </nz-select>
+          <div *ngIf="state.errors && frmCommunication.submitted">
+            <small style="color: red" *ngIf="state.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>
@@ -83,11 +107,17 @@
             name="district"
             #district="ngModel"
             ngModel
+            required
           >
             <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
             <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
             <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
           </nz-select>
+          <div *ngIf="district.errors && frmCommunication.submitted">
+            <small style="color: red" *ngIf="district.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>
@@ -102,7 +132,13 @@
             Placeholder="Enter a Pincode"
             ngModel
             #pincode="ngModel"
+            required
           />
+          <div *ngIf="pincode.errors && frmCommunication.submitted">
+            <small style="color: red" *ngIf="pincode.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>

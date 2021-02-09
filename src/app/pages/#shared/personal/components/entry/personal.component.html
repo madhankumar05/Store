@@ -12,7 +12,13 @@
             ngModel
             #name="ngModel"
             Placeholder="Enter a Name"
+            required
           />
+          <div *ngIf="name.errors && frmPersonal.submitted">
+            <small style="color: red" *ngIf="name.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>
@@ -27,11 +33,17 @@
             name="gender"
             #gender="ngModel"
             ngModel
+            required
           >
             <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
             <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
             <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
           </nz-select>
+          <div *ngIf="gender.errors && frmPersonal.submitted">
+            <small style="color: red" *ngIf="gender.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>
@@ -46,7 +58,13 @@
           nzXs="24"
           ngModel
           nzAllowClear
+          required
         ></nz-date-picker>
+        <div *ngIf="DOB.errors && frmPersonal.submitted">
+          <small style="color: red" *ngIf="DOB.errors.required"
+            >This field is required !</small
+          >
+        </div>
       </nz-form-item>
     </div>
 
@@ -62,7 +80,13 @@
             #mobile="ngModel"
             ngModel
             Placeholder="Enter a Mobile"
+            required
           />
+          <div *ngIf="mobile.errors && frmPersonal.submitted">
+            <small style="color: red" *ngIf="mobile.errors.required"
+              >This field is required !</small
+            >
+          </div>
         </div>
       </nz-form-item>
     </div>

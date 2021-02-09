@@ -5,28 +5,21 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
-
   mode!: string;
 
-  constructor(private SrvRegistration: RegistrationService,
-    private cd: ChangeDetectorRef, private nzMessageService: NzMessageService
-  ) {
-  }
+  constructor(
+    private SrvRegistration: RegistrationService,
+    private cd: ChangeDetectorRef,
+    private nzMessageService: NzMessageService
+  ) {}
   ngOnInit(): void {
-    this.SrvRegistration.Mode$.pipe().subscribe(s => {
+    this.SrvRegistration.Mode$.pipe().subscribe((s) => {
       this.mode = s.mode;
       console.log(this.mode);
       this.cd.markForCheck();
     });
-  }
-  cancel(): void {
-    this.nzMessageService.info('click cancel');
-  }
-
-  confirm(): void {
-    this.nzMessageService.info('click confirm');
   }
 }
