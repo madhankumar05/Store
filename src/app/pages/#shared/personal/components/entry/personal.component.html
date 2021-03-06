@@ -9,7 +9,7 @@
             nz-input
             name="name"
             type="text"
-            ngModel
+            [(ngModel)]="ObjPersonal.Name"
             #name="ngModel"
             Placeholder="Enter a Name"
             required
@@ -32,7 +32,7 @@
             nzPlaceHolder="Select a Gender"
             name="gender"
             #gender="ngModel"
-            ngModel
+            [(ngModel)]="ObjPersonal.Gender"
             required
           >
             <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
@@ -56,7 +56,7 @@
           nz-col
           nzMd="24"
           nzXs="24"
-          ngModel
+          [(ngModel)]="ObjPersonal.DOB"
           nzAllowClear
           required
         ></nz-date-picker>
@@ -78,7 +78,7 @@
             type="tel"
             id="mobile"
             #mobile="ngModel"
-            ngModel
+            [(ngModel)]="ObjPersonal.Mobile"
             Placeholder="Enter a Mobile"
             required
           />

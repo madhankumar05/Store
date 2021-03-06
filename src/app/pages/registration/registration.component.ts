@@ -14,9 +14,9 @@ export class RegistrationComponent implements OnInit {
     private SrvRegistration: RegistrationService,
     private cd: ChangeDetectorRef,
     private nzMessageService: NzMessageService
-  ) {}
+  ) { }
   ngOnInit(): void {
-    this.SrvRegistration.Mode$.pipe().subscribe((s) => {
+    this.SrvRegistration.Mode$.pipe().subscribe(s => {
       this.mode = s.mode;
       console.log(this.mode);
       this.cd.markForCheck();

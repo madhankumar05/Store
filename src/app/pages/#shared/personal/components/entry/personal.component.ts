@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { MlPersonal } from '../../models/ml-personal';
 
 @Component({
   selector: 'app-personal',
@@ -9,23 +10,23 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class PersonalComponent implements OnInit {
   @ViewChild('frmPersonal') public frmPersonal: NgForm | any;
-  constructor(private nzMessageService: NzMessageService) {}
 
-  ngOnInit(): void {}
+  public ObjPersonal: MlPersonal = new MlPersonal();;
+  constructor(private nzMessageService: NzMessageService) {
+    this.ObjPersonal = new MlPersonal();
+  }
 
-  personalData(): void {
-    if (this.validateFormData(this.frmPersonal)) {
-      this.nzMessageService.success('Vaild');
-    } else {
-      this.nzMessageService.error('Invaild ! Please check form data');
-    }
+  ngOnInit(): void { }
+
+  personalData(): MlPersonal {
+    return this.ObjPersonal;
   }
 
   clear(): void {
-    this.frmPersonal.resetForm();
+    this.ObjPersonal = new MlPersonal();
   }
 
-  validateFormData(form: any) {
+  validateFormData(form: NgForm) {
     (form as any).submitted = true;
     return this.isValidForm(form);
   }
