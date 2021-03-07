@@ -26,7 +26,12 @@ export class PersonalComponent implements OnInit {
     this.ObjPersonal = new MlPersonal();
   }
 
-  validateFormData(form: NgForm) {
+  Isvalid(): boolean {
+    let isValid = this.validateFormData(this.frmPersonal);
+    return isValid as boolean;
+  }
+
+  validateFormData(form: any) {
     (form as any).submitted = true;
     return this.isValidForm(form);
   }

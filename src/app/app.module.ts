@@ -20,7 +20,8 @@ registerLocaleData(en);
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/welcome' },
   { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
-  { path: 'registration', loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationModule) }
+  { path: 'registration', loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationModule) },
+  { path: 'regList', loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationModule) }
 ]
 
 @NgModule({
