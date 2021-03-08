@@ -12,6 +12,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   { path: '', component: RegistrationComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
     NzPopconfirmModule,
     NzMessageModule,
     MatTableModule,
+    MatButtonModule,
     RouterModule.forChild(routes)
   ]
 })
