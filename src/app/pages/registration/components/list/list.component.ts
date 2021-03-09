@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../../services/registration.service';
 import { MlPersonal } from 'src/app/pages/#shared/personal/models/ml-personal';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -14,10 +15,10 @@ export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['Sno', 'Name', 'Gender', 'DOB', 'Mobile', 'Options'];
   dataSource = new MatTableDataSource<MlPersonal>();
+  dataArray: Array<MlPersonal> = [];
 
 
-
-  constructor(private srvRegister: RegistrationService, private cd: ChangeDetectorRef) {
+  constructor(private srvRegister: RegistrationService, private cd: ChangeDetectorRef, private router: Router) {
 
   }
 
@@ -31,7 +32,8 @@ export class ListComponent implements OnInit {
   public LoadPersonalDetails(): void {
 
     this.srvRegister.PersonalData$.subscribe(d => {
-      this.dataSource.data = d;
+      this.dataArray = d;
+      this.dataSource.data = this.dataArray;
       this.cd.markForCheck();
     });
   }
@@ -40,17 +42,19 @@ export class ListComponent implements OnInit {
    * EditDetails
    */
   public EditDetails(i: number): void {
-    // let EditData: MlPersonal = this.PersonalData[i];
-    // console.log(EditData);
+    let EditData: MlPersonal = this.dataArray[i];
+    this.srvRegister.Mode.next({ mode: 'ENTRY', data: EditData });
+    this.router.navigateByUrl('/registration');
   }
 
   /**
    * DeleteDetails
    */
   public DeleteDetails(i: number): void {
-    this.dataSource.data.splice(i, 1);
-    this.dataSource = new MatTableDataSource<MlPersonal>(this.dataSource.data);
-    this.srvRegister.PersonalData.next(this.dataSource.data);
+    // this.dataSource.data.splice(i, 1);
+    this.dataArray.splice(i, 1);
+    this.dataSource = new MatTableDataSource<MlPersonal>(this.dataArray);
+    this.srvRegister.PersonalData.next(this.dataArray);
     this.cd.markForCheck();
     this.LoadPersonalDetails();
   }

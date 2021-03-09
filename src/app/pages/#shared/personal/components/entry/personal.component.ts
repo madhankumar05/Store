@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { MlPersonal } from '../../models/ml-personal';
@@ -11,12 +11,17 @@ import { MlPersonal } from '../../models/ml-personal';
 export class PersonalComponent implements OnInit {
   @ViewChild('frmPersonal') public frmPersonal: NgForm | any;
 
-  public ObjPersonal: MlPersonal = new MlPersonal();;
+  public ObjPersonal: MlPersonal = new MlPersonal();
+  @Input() EditData: MlPersonal = new MlPersonal();
   constructor(private nzMessageService: NzMessageService) {
     this.ObjPersonal = new MlPersonal();
+    this.ObjPersonal = this.EditData;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+
+  }
 
   personalData(): MlPersonal {
     return this.ObjPersonal;

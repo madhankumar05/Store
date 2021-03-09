@@ -18,7 +18,6 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.SrvRegistration.Mode$.pipe().subscribe(s => {
       this.mode = s.mode;
-      console.log(this.mode);
       this.cd.markForCheck();
     });
   }

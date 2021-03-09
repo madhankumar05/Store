@@ -17,6 +17,7 @@ export class EntryComponent implements OnInit {
 
   objData: MlPersonal = new MlPersonal();
   public data: MlPersonal[] = [];
+  editableData: MlPersonal = new MlPersonal();
   constructor(public srvRegister: RegistrationService, public srvMessage: NzMessageService) {
 
   }
@@ -24,9 +25,21 @@ export class EntryComponent implements OnInit {
   ngOnInit(): void {
     this.srvRegister.PersonalData$.subscribe(d => {
       this.data = d;
-      console.log(this.data);
     });
+    this.GetEditData();
+  }
 
+  /**
+   * GetEditData
+   */
+  public GetEditData() {
+    this.srvRegister.Mode$.subscribe(d => {
+      if (d.mode === 'ENTRY') {
+        this.editableData = d.data;
+        console.log(this.editableData);
+
+      }
+    });
   }
   cancel(): void { }
 
