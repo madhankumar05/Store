@@ -13,14 +13,12 @@ export class PersonalComponent implements OnInit {
 
   public ObjPersonal: MlPersonal = new MlPersonal();
   @Input() EditData: MlPersonal = new MlPersonal();
-  constructor(private nzMessageService: NzMessageService) {
-    this.ObjPersonal = new MlPersonal();
-    this.ObjPersonal = this.EditData;
-  }
+  constructor(private nzMessageService: NzMessageService) {}
 
   ngOnInit(): void {
-
-
+    if (this.EditData !== undefined) {
+      this.ObjPersonal = this.EditData;
+    }
   }
 
   personalData(): MlPersonal {
