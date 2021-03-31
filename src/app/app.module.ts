@@ -38,6 +38,13 @@ const routes: Routes = [
         (m) => m.RegistrationModule
       ),
   },
+  {
+    path: 'payment-gateway',
+    loadChildren: () =>
+      import('./pages/payment-gateway/payment-gateway.module').then(
+        (m) => m.PaymentGatewayModule
+      ),
+  },
 ];
 
 @NgModule({
