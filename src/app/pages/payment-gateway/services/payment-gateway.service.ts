@@ -6,12 +6,9 @@ import { mlCreatePlan, mlCreateSubscription } from '../models';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    Authorization: btoa('rzp_test_I8kNJbHC3cCRab:kNEFXCCz2kj5XkjOyyATKi1p'),
+    Authorization:
+      'Basic ' + btoa('rzp_test_I8kNJbHC3cCRab:kNEFXCCz2kj5XkjOyyATKi1p'),
   }),
-  params: new HttpParams().set(
-    'rzp_test_I8kNJbHC3cCRab',
-    'kNEFXCCz2kj5XkjOyyATKi1p'
-  ),
 };
 
 // const headers = new HttpHeaders()
@@ -43,9 +40,26 @@ export class PaymentGatewayService {
    * Create Plan
    */
   public CreatePlan(planDetails: mlCreatePlan): Observable<any> {
-    const body = JSON.stringify(planDetails);
-    console.log(body);
-    var res = this.http.post<any>('api/plans', body, httpOptions);
+    const data = JSON.stringify(planDetails);
+
+    const data1 = {
+      period: 'weekly',
+      interval: 1,
+      item: {
+        name: 'Test plan - Weekly',
+        amount: 69900,
+        currency: 'INR',
+        description: 'Description for the test plan',
+      },
+      notes: {
+        notes_key_1: 'Tea, Earl Grey, Hot',
+        notes_key_2: 'Tea, Earl Grey… decaf.',
+      },
+    };
+    console.log(data);
+    console.log(data1);
+
+    var res = this.http.post<any>('api/plans', data1, httpOptions);
     console.log(res);
     return res;
   }
