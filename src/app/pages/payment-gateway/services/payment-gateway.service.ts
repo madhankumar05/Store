@@ -1,7 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { mlCreatePlan, mlCreateSubscription } from '../models';
+import {
+  mlCreatePlan,
+  mlCreateSubscription,
+  mlPlanResponseDetails,
+} from '../models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -39,28 +43,17 @@ export class PaymentGatewayService {
   /**
    * Create Plan
    */
-  public CreatePlan(planDetails: mlCreatePlan): Observable<any> {
-    const data = JSON.stringify(planDetails);
+  public CreatePlan(
+    planDetails: mlCreatePlan
+  ): Observable<mlPlanResponseDetails> {
+    const data = JSON.parse(JSON.stringify(planDetails));
 
-    const data1 = {
-      period: 'weekly',
-      interval: 1,
-      item: {
-        name: 'Test plan - Weekly',
-        amount: 69900,
-        currency: 'INR',
-        description: 'Description for the test plan',
-      },
-      notes: {
-        notes_key_1: 'Tea, Earl Grey, Hot',
-        notes_key_2: 'Tea, Earl Grey… decaf.',
-      },
-    };
-    console.log(data);
-    console.log(data1);
+    let res = this.http.post<mlPlanResponseDetails>(
+      'api/plans',
+      data,
+      httpOptions
+    );
 
-    var res = this.http.post<any>('api/plans', data1, httpOptions);
-    console.log(res);
     return res;
   }
 

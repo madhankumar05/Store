@@ -1,5 +1,9 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import { mlCreatePlan, mlCreateSubscription } from './models';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import {
+  mlCreatePlan,
+  mlCreateSubscription,
+  mlPlanResponseDetails,
+} from './models';
 import {
   ICustomWindow,
   PaymentGatewayService,
@@ -14,32 +18,13 @@ import {
 export class PaymentGatewayComponent implements OnInit {
   private _window: ICustomWindow;
   public rzp: any;
+  public PlanResponseDetails: mlPlanResponseDetails;
+  public objPlanDetails: mlCreatePlan;
+  public objSubscriptionDetails: mlCreateSubscription;
 
-  // public options: any = {
-  //   key: 'rzp_test_I8kNJbHC3cCRab', // add razorpay key here
-  //   name: 'The Swag Coder',
-  //   description: 'Shopping',
-  //   amount: 100, // razorpay takes amount in paisa
-  //   prefill: {
-  //     name: 'The Swag Coder',
-  //     email: '', // add your email id
-  //   },
-  //   notes: {},
-  //   theme: {
-  //     color: '#3880FF',
-  //   },
-  //   handler: this.paymentHandler.bind(this),
-  //   modal: {
-  //     ondismiss: () => {
-  //       this.zone.run(() => {
-  //         alert('failure');
-  //         // add current page routing if payment fails
-  //       });
-  //     },
-  //     escape: false,
-  //   },
-  // };
-
+  /**
+   * Razorpay Subscription Checkout Details
+   */
   public options: any = {
     key: 'rzp_test_I8kNJbHC3cCRab',
     subscription_id: 'sub_Gs9ZNKtjSSpUDp',
@@ -73,11 +58,12 @@ export class PaymentGatewayComponent implements OnInit {
     },
   };
 
-  public objPlanDetails: mlCreatePlan;
-  public objSubscriptionDetails: mlCreateSubscription;
-
-  constructor(private zone: NgZone, private winRef: PaymentGatewayService) {
-    this._window = this.winRef.nativeWindow;
+  constructor(
+    private zone: NgZone,
+    private PaymentGateway: PaymentGatewayService,
+    private cd: ChangeDetectorRef
+  ) {
+    this._window = this.PaymentGateway.nativeWindow;
     this.objPlanDetails = new mlCreatePlan();
     this.objSubscriptionDetails = new mlCreateSubscription();
   }
@@ -85,12 +71,12 @@ export class PaymentGatewayComponent implements OnInit {
   ngOnInit(): void {}
 
   initPay(): void {
-    this.rzp = new this.winRef.nativeWindow['Razorpay'](this.options);
+    this.rzp = new this.PaymentGateway.nativeWindow['Razorpay'](this.options);
     this.rzp.open();
   }
 
   /**
-   * Payment success callback method or function
+   * Payment Success Callback Method or Function
    */
   paymentHandler(res: any) {
     this.zone.run(() => {
@@ -103,33 +89,34 @@ export class PaymentGatewayComponent implements OnInit {
    * Create Plan
    */
   public btnCreatePlan() {
-    this.objPlanDetails.period = 'daily';
+    this.objPlanDetails.period = 'weekly';
     this.objPlanDetails.interval = 1;
-    this.objPlanDetails.item.name = 'Test plan - daily';
-    this.objPlanDetails.item.amount = 2;
+    this.objPlanDetails.item.name = 'Test plan - Weekly';
+    this.objPlanDetails.item.amount = 100;
     this.objPlanDetails.item.currency = 'INR';
     this.objPlanDetails.item.description = 'Description for the test plan';
-    this.objPlanDetails.notes.notes_key_1 = 'note 1';
-    this.objPlanDetails.notes.notes_key_2 = 'note 2';
+    this.objPlanDetails.notes.notes_key_1 = 'Tea, Earl Grey, Hot';
+    this.objPlanDetails.notes.notes_key_2 = 'Tea, Earl Grey… decaf.';
 
-    console.log(this.objPlanDetails);
-    this.winRef.CreatePlan(this.objPlanDetails).subscribe((res) => {
-      console.log(res);
+    this.PaymentGateway.CreatePlan(this.objPlanDetails).subscribe((res) => {
+      this.PlanResponseDetails = new mlPlanResponseDetails();
+      this.PlanResponseDetails = res;
+      this.cd.markForCheck();
     });
   }
 
   /**
-   * Subscribe Now method or function
+   * Subscribe Now Method or Function
    */
   public btnSubscribeNow() {
     this.objSubscriptionDetails.plan_id = 'daily';
     this.objSubscriptionDetails.total_count = 1;
 
     console.log(this.objSubscriptionDetails);
-    this.winRef
-      .CreateSubscription(this.objSubscriptionDetails)
-      .subscribe((res) => {
-        console.log(res);
-      });
+    this.PaymentGateway.CreateSubscription(
+      this.objSubscriptionDetails
+    ).subscribe((res) => {
+      console.log(res);
+    });
   }
 }
