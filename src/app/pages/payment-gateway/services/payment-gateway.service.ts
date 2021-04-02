@@ -61,7 +61,7 @@ export class PaymentGatewayService {
    * Create Subscription { headers: headers }
    */
   public CreateSubscription(SubscriptionDetails: mlCreateSubscription) {
-    const body = JSON.stringify(SubscriptionDetails);
+    const body = JSON.parse(JSON.stringify(SubscriptionDetails));
     console.log(body);
     return this.http.post<any>('api/subscriptions', body, httpOptions);
   }

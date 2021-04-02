@@ -21,14 +21,15 @@ export class PaymentGatewayComponent implements OnInit {
   public PlanResponseDetails: mlPlanResponseDetails;
   public objPlanDetails: mlCreatePlan;
   public objSubscriptionDetails: mlCreateSubscription;
+  private SubscriptionID: string = '';
 
   /**
    * Razorpay Subscription Checkout Details
    */
   public options: any = {
     key: 'rzp_test_I8kNJbHC3cCRab',
-    subscription_id: 'sub_Gs9ZNKtjSSpUDp',
-    name: 'Acme Corp.',
+    subscription_id: this.SubscriptionID,
+    name: 'Test',
     description: 'Monthly Test Plan',
     image: '/your_logo.png',
     handler: function (response) {
@@ -45,9 +46,9 @@ export class PaymentGatewayComponent implements OnInit {
         alert(response.razorpay_signature);
     },
     prefill: {
-      name: 'Gaurav Kumar',
-      email: 'gaurav.kumar@example.com',
-      contact: '+919876543210',
+      name: 'Madhan Kumar',
+      email: 'Madhankumar@example.com',
+      contact: '+918909876654',
     },
     notes: {
       note_key_1: 'Tea. Earl Grey. Hot',
@@ -89,10 +90,10 @@ export class PaymentGatewayComponent implements OnInit {
    * Create Plan
    */
   public btnCreatePlan() {
-    this.objPlanDetails.period = 'weekly';
+    this.objPlanDetails.period = 'monthly';
     this.objPlanDetails.interval = 1;
-    this.objPlanDetails.item.name = 'Test plan - Weekly';
-    this.objPlanDetails.item.amount = 100;
+    this.objPlanDetails.item.name = 'Test plan - monthly';
+    this.objPlanDetails.item.amount = 1000;
     this.objPlanDetails.item.currency = 'INR';
     this.objPlanDetails.item.description = 'Description for the test plan';
     this.objPlanDetails.notes.notes_key_1 = 'Tea, Earl Grey, Hot';
@@ -102,21 +103,26 @@ export class PaymentGatewayComponent implements OnInit {
       this.PlanResponseDetails = new mlPlanResponseDetails();
       this.PlanResponseDetails = res;
       this.cd.markForCheck();
+      this.SubscribeNow(this.PlanResponseDetails.id);
     });
   }
 
   /**
    * Subscribe Now Method or Function
    */
-  public btnSubscribeNow() {
-    this.objSubscriptionDetails.plan_id = 'daily';
+  public SubscribeNow(planID: string) {
+    this.objSubscriptionDetails.plan_id = planID;
     this.objSubscriptionDetails.total_count = 1;
-
-    console.log(this.objSubscriptionDetails);
     this.PaymentGateway.CreateSubscription(
       this.objSubscriptionDetails
     ).subscribe((res) => {
-      console.log(res);
+      this.SubscriptionID = res.id;
+      this.cd.markForCheck();
+      this.initPay();
     });
   }
+
+  /**
+   * demo checkout
+   */
 }
