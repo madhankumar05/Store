@@ -5,6 +5,7 @@ import {
   mlCreatePlan,
   mlCreateSubscription,
   mlPlanResponseDetails,
+  mlSubscriptionResDetails,
 } from '../models';
 
 const httpOptions = {
@@ -14,14 +15,6 @@ const httpOptions = {
       'Basic ' + btoa('rzp_test_I8kNJbHC3cCRab:kNEFXCCz2kj5XkjOyyATKi1p'),
   }),
 };
-
-// const headers = new HttpHeaders()
-//   .set('Content-Type', 'application/json')
-// .set('rzp_test_I8kNJbHC3cCRab', 'kNEFXCCz2kj5XkjOyyATKi1p');
-// .set(
-//   'Authorization',
-//   btoa('rzp_test_I8kNJbHC3cCRab:kNEFXCCz2kj5XkjOyyATKi1p')
-// );
 
 export interface ICustomWindow extends Window {
   __custom_global_stuff: string;
@@ -60,9 +53,14 @@ export class PaymentGatewayService {
   /**
    * Create Subscription { headers: headers }
    */
-  public CreateSubscription(SubscriptionDetails: mlCreateSubscription) {
+  public CreateSubscription(
+    SubscriptionDetails: mlCreateSubscription
+  ): Observable<mlSubscriptionResDetails> {
     const body = JSON.parse(JSON.stringify(SubscriptionDetails));
-    console.log(body);
-    return this.http.post<any>('api/subscriptions', body, httpOptions);
+    return this.http.post<mlSubscriptionResDetails>(
+      'api/subscriptions',
+      body,
+      httpOptions
+    );
   }
 }
