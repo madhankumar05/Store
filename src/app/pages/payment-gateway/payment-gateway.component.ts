@@ -9,6 +9,7 @@ import {
   ICustomWindow,
   PaymentGatewayService,
 } from './services/payment-gateway.service';
+import CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-payment-gateway',
@@ -131,5 +132,19 @@ export class PaymentGatewayComponent implements OnInit {
   /**
    * demo checkout
    */
-  demoPay() {}
+  demoPay() {
+    let paymentID = 'order_EFph1itQK4z1NQ';
+    let subscriptionID = 'sub_GvbUdUgMZuNT3h';
+
+    let generated_signature = CryptoJS.HmacSHA256(
+      paymentID + '|' + subscriptionID,
+      'rzp_test_I8kNJbHC3cCRab'
+    ).toString(CryptoJS.enc.Hex);
+    alert(generated_signature);
+    if (
+      '5d98d62488af5983c6503d042735169f0da2502c78294e53d15bdf0b729e8d3e' ==
+      generated_signature
+    ) {
+    }
+  }
 }
