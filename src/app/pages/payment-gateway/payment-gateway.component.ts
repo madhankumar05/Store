@@ -10,6 +10,7 @@ import {
   PaymentGatewayService,
 } from './services/payment-gateway.service';
 import CryptoJS from 'crypto-js';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-payment-gateway',
@@ -35,19 +36,7 @@ export class PaymentGatewayComponent implements OnInit {
     description: 'Monthly Test Plan',
     image:
       'https://png.pngtree.com/png-vector/20190917/ourmid/pngtree-store-icon-in-line-style-png-image_1736161.jpg',
-    handler: function (response) {
-      console.log(
-        response.razorpay_payment_id +
-          '-' +
-          response.razorpay_subscription_id +
-          '-' +
-          response.razorpay_signature
-      );
-
-      alert(response.razorpay_payment_id),
-        alert(response.razorpay_subscription_id),
-        alert(response.razorpay_signature);
-    },
+    handler: this.paymentHandler,
     prefill: {
       name: 'Madhan Kumar',
       email: 'Madhankumar@example.com',
@@ -65,7 +54,8 @@ export class PaymentGatewayComponent implements OnInit {
   constructor(
     private zone: NgZone,
     private PaymentGateway: PaymentGatewayService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private msg: NzMessageService
   ) {
     this._window = this.PaymentGateway.nativeWindow;
     this.objPlanDetails = new mlCreatePlan();
@@ -85,11 +75,18 @@ export class PaymentGatewayComponent implements OnInit {
   /**
    * Payment Success Callback Method or Function
    */
-  paymentHandler(res: any) {
-    this.zone.run(() => {
-      // add API call here
-      alert('success');
-    });
+  paymentHandler(response: any) {
+    console.log(
+      response.razorpay_payment_id +
+        '-' +
+        response.razorpay_subscription_id +
+        '-' +
+        response.razorpay_signature
+    );
+
+    alert(response.razorpay_payment_id),
+      alert(response.razorpay_subscription_id),
+      alert(response.razorpay_signature);
   }
 
   /**
@@ -130,21 +127,27 @@ export class PaymentGatewayComponent implements OnInit {
   }
 
   /**
-   * demo checkout
+   * Demo for Check payment success signature
    */
-  demoPay() {
-    let paymentID = 'order_EFph1itQK4z1NQ';
-    let subscriptionID = 'sub_GvbUdUgMZuNT3h';
+  demoCheckSignature() {
+    let paymentID = 'pay_GwuZM1xnnWdTZM';
+    let subscriptionID = 'sub_GwuYz1aAg0fMdq';
 
-    let generated_signature = CryptoJS.HmacSHA256(
+    // Razorpay subscription success signature
+    let RazorpaySignature =
+      '99f4a3b57651e241bb410c6d583d89bbedc8742aed1385a9cd7dadc5930d23d5';
+    let RazorpayKeySecret = 'kNEFXCCz2kj5XkjOyyATKi1p';
+
+    // Generate signature using payment id, subscription id and razorpay key secret
+    var generated_signature = CryptoJS.HmacSHA256(
       paymentID + '|' + subscriptionID,
-      'rzp_test_I8kNJbHC3cCRab'
-    ).toString(CryptoJS.enc.Hex);
-    alert(generated_signature);
-    if (
-      '5d98d62488af5983c6503d042735169f0da2502c78294e53d15bdf0b729e8d3e' ==
-      generated_signature
-    ) {
+      RazorpayKeySecret
+    );
+
+    if (RazorpaySignature == generated_signature) {
+      this.msg.success('Payment success');
+    } else {
+      this.msg.success('Payment Failure');
     }
   }
 }
